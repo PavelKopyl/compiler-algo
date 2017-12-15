@@ -19,6 +19,8 @@
 #endif
 #if __has_include(<string_view>) && !defined(USE_BOOST_CONTAINERS)
 #include <string_view>
+#elif __has_include(<experimental/string_view>) && !defined(USE_BOOST_CONTAINERS)
+#include <experimental/string_view>
 #else
 #include <boost/utility/string_view.hpp>
 #endif
@@ -50,6 +52,8 @@ template <typename ValueT> using optional = boost::optional<ValueT>;
 
 #if __has_include(<string_view>) && !defined(USE_BOOST_CONTAINERS)
 using string_view = std::string_view;
+#elif __has_include(<experimental/string_view>) && !defined(USE_BOOST_CONTAINERS)
+using string_view = std::experimental::string_view;
 #else
 using string_view = boost::string_view;
 #endif

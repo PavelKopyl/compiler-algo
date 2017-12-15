@@ -44,7 +44,7 @@ private:
   FunctionSymbolsT FunctionSymbols{};
 };
 
-inline WyrmContext GlobalContext{};
+extern WyrmContext GlobalContext;
 string_view internedName(std::string &&name);
 
 } // namespace wyrm

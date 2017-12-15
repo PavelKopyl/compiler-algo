@@ -1,15 +1,30 @@
 language: cpp
-compiler: clang
-os: osx
-osx_image: xcode9.1
 
 before_install:
-- brew install ninja || true
-- brew install boost || true
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install ninja boost || true ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+       sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y;
+       sudo apt-get update -q;
+       sudo apt-get install libboost-dev libboost-graph-dev gcc-6 g++-6 -y;
+       sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 50;
+       sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/g++-6 50;
+       sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-6 50;
+       sudo update-alternatives --install /usr/bin/cc cc /usr/bin/gcc-6 50;
+    fi
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: false
+    - os: osx
+      compiler: clang
+      osx_image: xcode9.1
 
 script:
-- mkdir build
-- cd build
-- cmake ..
-- make
-- test/unittest
+  - mkdir build
+  - cd build
+  - cmake ..
+  - make
+  - test/unittest

@@ -7,7 +7,8 @@ add_executable(gviz
 target_include_directories(gviz
   PUBLIC
   ${Boost_INCLUDE_DIRS})
+
 target_link_libraries(gviz
-  ${Boost_LIBRARY_DIRS})
+  boost_graph)
 
 add_subdirectory(Analysis)
